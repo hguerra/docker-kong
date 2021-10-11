@@ -30,8 +30,12 @@ services:
         paths:
           - /
     plugins:
-      - name: key-auth
+      - name: jwt
         enabled: true
+        config:
+          secret_is_base64: false
+          run_on_preflight: true
+          maximum_expiration: 1800
       - name: proxy-cache
         enabled: true
         config:
@@ -65,5 +69,10 @@ services:
 
 consumers:
   - username: mock-user
-    keyauth_credentials:
-      - key: mock-key
+    custom_id: ab4bf4a1-a8bd-4bec-a999-75b1eb281743
+
+jwt_secrets:
+  - consumer: mock-user
+    algorithm: HS256
+    key: a36c3049b36249a3c9f8891cb127243c
+    secret: e71829c351aa4242c2719cbfbe671c09
